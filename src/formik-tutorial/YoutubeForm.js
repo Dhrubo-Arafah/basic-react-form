@@ -1,51 +1,46 @@
-import React, { Component } from 'react'
+import { useFormik } from 'formik'
+import React from 'react'
 
-export class YoutubeForm extends Component {
- constructor(props) {
-  super(props);
-  this.state = {
+const YoutubeForm = () => {
+ const formik = useFormik({
+  initialValues: {
    name: '',
    email: '',
    channel: ''
-  }
-  this.inputChangeHandler = this.inputChangeHandler.bind(this);
-  this.submitHandler = this.submitHandler.bind(this);
+  },
+ onSubmit: values => {
+  console.log('Values:', formik.values)
  }
+ })
  
+ return (
+  <div>
 
- inputChangeHandler = event => {
-  this.setState({
-   [event.target.name]: event.target.value
-  })
- }
+   <form onSubmit={formik.handleSubmit}>
 
- submitHandler = event => {
-  console.log(this.state);
-  event.preventDefault();
-}
+    <label htmlFor="name">Name</label>
+    <input type="text"
+     value={formik.values.name}
+     name="name"
+     onChange={formik.handleChange} />
 
- render() {
-  return (
-   <div>
+    <label htmlFor="email">Email</label>
+    <input type="email"
+     value={formik.values.email}
+     name="email"
+     onChange={formik.handleChange} />
 
-    <form onSubmit={this.submitHandler}>
+    <label htmlFor="channel">Channel</label>
+    <input type="text"
+     value={formik.values.channel}
+     name="channel"
+     onChange={formik.handleChange} /><br/>
 
-     <label htmlFor="name">Name</label>
-     <input type="text" value={this.state.name} name="name" onChange={this.inputChangeHandler}/>
+    <button type="submit">Submit</button>
 
-     <label htmlFor="email">Email</label>
-     <input type="email" value={this.state.email} name="email" onChange={this.inputChangeHandler} />
-
-     <label htmlFor="channel">Channel</label>
-     <input type="text" value={this.state.channel} name="channel" onChange={this.inputChangeHandler} />
-
-     <button type="submit">Submit</button>
-
-    </form>
-   
-   </div>
-  )
- }
+   </form>
+  </div>
+ )
 }
 
 export default YoutubeForm
